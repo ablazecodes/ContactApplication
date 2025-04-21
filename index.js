@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const type = btn.dataset.type;
             btn.addEventListener('click', () => {
                 const container = type === 'address1' ? address1 : address2;
-                handleInlineEditAddress(container, contact, type);
+                handleInlineEdit(container, contact, type);
             });
         });
 
@@ -99,12 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function handleInlineEdit(el) {
         const existingInput = el.querySelector('input');
-    
         const editBtn = el.querySelector('.edit-contact');
     
         if (existingInput) {
-            const newText = existingInput.value.trim();
-            el.textContent = newText || existingInput.defaultValue;
+            const newStreet = el.querySelector('input:nth-child(1)').value.trim();
+            const newCountry = el.querySelector('input:nth-child(2)').value.trim();
+    
+            el.textContent = (newStreet || '') + (newCountry ? ', ' + newCountry : '');
     
             if (editBtn) {
                 el.appendChild(editBtn);
@@ -113,36 +114,60 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     
         const currentText = el.textContent.trim();
+        const [currentStreet, currentCountry] = currentText.split(',').map(t => t.trim());
     
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.value = currentText;
-        input.defaultValue = currentText;
+        const input1 = document.createElement('input');
+        const input2 = document.createElement('input');
+        input1.type = 'text';
+        input2.type = 'text';
+        input1.value = currentStreet || '';
+        input2.value = currentCountry || '';
     
         el.innerHTML = '';
-        el.appendChild(input);
-        input.focus();
+        el.appendChild(input1);
+        el.appendChild(input2);
+        if (editBtn) el.appendChild(editBtn);
     
-        input.addEventListener('keydown', (e) => {
+        input1.focus();
+    
+        const finalizeEdit = () => {
+            const newStreet = input1.value.trim();
+            const newCountry = input2.value.trim();
+            el.textContent = (newStreet || '') + (newCountry ? ', ' + newCountry : '');
+            if (editBtn) el.appendChild(editBtn);
+        };
+    
+        input1.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
-                const newText = input.value.trim();
-                el.textContent = newText || currentText;
+                finalizeEdit();
+            }
+        });
     
-                if (editBtn) {
-                    el.appendChild(editBtn);
+        input2.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                finalizeEdit();
+            }
+        });
+    
+        input1.addEventListener('blur', () => {
+            setTimeout(() => {
+                if (!el.contains(document.activeElement)) {
+                    finalizeEdit();
                 }
-            }
+            }, 100);
         });
     
-        input.addEventListener('blur', () => {
-            const newText = input.value.trim();
-            el.textContent = newText || currentText;
-    
-            if (editBtn) {
-                el.appendChild(editBtn);
-            }
+        input2.addEventListener('blur', () => {
+            setTimeout(() => {
+                if (!el.contains(document.activeElement)) {
+                    finalizeEdit();
+                }
+            }, 100);
         });
+
+
     }
+    
 
     searchInput.addEventListener('input', () => {
         const term = searchInput.value.toLowerCase();
@@ -178,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="profile-element">
                         <label for="profile_img">Profile Image URL</label>
-                        <input type="url" id="profile_img" placeholder="Profile Image URL" />
+                        <input type="text" id="profile_img" placeholder="Profile Image URL" />
                     </div>
                     <div class="address1-element">
                         <label for="address1">Address 1</label>
@@ -236,7 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                         <div class="profile-element">
                             <label for="profile_img">Profile Image URL</label>
-                            <input type="url" id="profile_img" value="${contact.profile_img}" />
+                            <input type="text" id="profile_img" value="${contact.profile_img}" />
                         </div>
                         <div class="address1-element">
                             <label for="address1">Address 1</label>
@@ -296,7 +321,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = document.getElementById('email').value.trim();
         const phone = document.getElementById('phone').value.trim();
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        const phoneRegex = /^\+?[0-9]{7,15}$/;
+        const phoneRegex = /^\+?[0-9]{10,15}$/;
 
         if (!emailRegex.test(email)) {
             alert('Please enter a valid email address.');
@@ -304,11 +329,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (!phoneRegex.test(phone)) {
-            alert('Please enter a valid phone number (at least 7 digits).');
+            alert('Please enter a valid phone number (at least 10 digits).');
             return;
         }
         console.log(JSON.stringify(newContact));
-        
+
         fetch('http://localhost:3000/contacts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
