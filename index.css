@@ -1,0 +1,344 @@
+h1, h3, p {
+    padding: 0;
+    margin: 0;
+    display: inline;
+}
+
+.content {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(202, 202, 202);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    max-width: 1500px;
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    background-color: white;
+    margin: 5%;
+    border-radius: 25px;
+}
+
+.main .header {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.main .header .header-button {
+    width: 4rem;
+    height: 4rem;
+    border-radius: 50%;
+    border: none;
+    font-size: 2.7rem;
+    background-color: rgba(0, 94, 217, 0.788);
+    color: white;
+    cursor: pointer;
+}
+
+.main .two-col {
+    width: 80%;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.two-col .left-col, .two-col .right-col {
+    width: 50%;
+    height: 27rem;
+    border-radius: 15px;
+    border: 1px solid grey;
+}
+
+.two-col .left-col, .two-col .right-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.two-col, .left-col input:nth-child(1) {
+    border: none;
+    width: 100%;
+    border-radius: 15px;
+    padding: 20px 0;
+    font-size: 1.5rem;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.contact-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.contact-list .contact {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 20px 0;
+    font-weight: 400;
+    border-top: 1px solid rgb(187, 187, 187);
+}
+
+.contact-list .contact .contact-name{
+    cursor: pointer;
+}
+
+.contact-list .contact .contact-action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+.contact-list .contact .contact-action-buttons button, 
+.right-col .contact-deets .address button {
+    padding: 0;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.two-col .right-col .contact-deets {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 95%;
+    gap: 15px;
+    font-size: 1.3rem;
+}
+
+.two-col .right-col .contact-deets h3 {
+    width: 40%;
+    line-height: 30px;
+    font-size: 2rem;
+}
+
+.two-col .right-col .contact-deets > img {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    align-self: flex-end;
+}
+
+.two-col .right-col .contact-deets .address {
+    width: 100%;
+}
+
+.two-col .right-col .contact-deets .address-1,
+.two-col .right-col .contact-deets .address-2 {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.create-contact .form-element {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 1.3rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.create-contact .form-element input {
+    height: 2rem;
+    width: 50%;
+}
+
+.create-contact .form-element label {
+    justify-self: flex-end;
+}
+
+.create-contact #submit {
+    padding: 15px 30px;
+    border-radius: 20px;
+    border-top: none;
+    border-left: none;
+}
+
+@media (max-width: 756px) {
+    .content .main .two-col {
+        flex-direction: column;
+    }
+
+    .content .main .two-col .left-col, 
+    .content .main .two-col .right-col {
+        width: 100%;
+        height: 25rem;
+    }
+
+    .two-col .right-col .contact-deets > img {
+        width: 8rem;
+        height: 8rem;
+    }
+}
+
+@media (max-width: 456px) {
+    .main .header {
+        width: 90%;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .two-col .right-col .contact-deets > img {
+        width: 8rem;
+        height: 8rem;
+        align-self: center;
+    }
+
+    .two-col .right-col .contact-deets h3 {
+        width: 60%;
+        line-height: 30px;
+        font-size: 1.7rem;
+    }
+
+    .main .header .header-button {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .content .main {
+        width: 80%;
+    }
+}
+
+@media (max-width: 350px) {
+    p {
+        font-size: 1rem;
+    }
+
+    h3, .two-col .right-col .contact-deets h3 {
+        font-size: 1.4rem;
+        width: 100%;
+    }
+
+    .content .main {
+        width: 90%;
+    }
+
+    .contact-list .contact {
+        width: 90%;
+    }
+}
+
+.redBox {
+    border: 2px solid red;
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.create-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    width: 100%;
+    height: 90vh;;
+    max-width: 500px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+#create-contact-form{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas: 
+        "firstName lastName"
+        "phone phone"
+        "email email"
+        "address1 address2"
+        "profile profile"
+        "closeButton submitButton";
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#create-contact-form input{
+    width: 70%;
+    height: 20px;
+    border-radius: 5px;
+    border: 1px solid rgb(184, 184, 184);
+}
+
+.create-contact #submit{
+    width: 90%;
+    background-color: rgb(19, 105, 255);
+    cursor: pointer;
+    font-size: 1rem;
+    color: white;
+    padding: 10px;
+    grid-area: submitButton;
+}
+
+.create-contact .close-button{
+    grid-area: closeButton;
+    border-radius: 20px;
+    background-color: white;
+    border: 1px solid rgb(0, 98, 255);
+    color: rgb(0, 98, 255);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.firstName-element{
+    grid-area: firstName;
+}
+
+.lastName-element{
+    grid-area: lastName;
+}
+
+.phone-element{
+    grid-area: phone;
+}
+
+.email-element{
+    grid-area: email;
+}
+
+.address1-element{
+    grid-area: address1;
+}
+
+.address2-element{
+    grid-area: address2;
+}
+
+.profile-element{
+    grid-area: profile;
+}
+
+.firstName-element, .lastName-element, .phone-element, .email-element, .address1-element, .address2-element{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
