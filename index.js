@@ -113,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleInlineEdit(el, contact, type) {
-        //saving jo humne likha new
+        //saving jo humne likha new, el = address p tag
         const existingInput = el.querySelector('input');
         const editBtn = el.querySelector('.edit-contact');
         const id = el.dataset.id;
