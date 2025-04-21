@@ -146,6 +146,28 @@ app.put('/contacts/:id', (req, res) => {
     });
 });
 
+
+app.delete('/contact/:id', (req, res) => {
+    const id = req.params.id;
+    
+    db.beginTransaction(err => {
+        if (err) return res.status(500).json({ error: err.message });
+
+        db.query('DELETE FROM address WHERE customer_id = ?', [id], (err) => {
+            if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
+            
+            db.query('DELETE FROM contact WHERE id = ?', [id], (err) => {
+                if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
+
+                db.commit(err => {
+                    if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
+                    res.json({ message: 'Contact and addresses deleted' });
+                });
+            });
+        });
+    });
+});
+
 function commitAndReturnUpdatedContact(id, res) {
     db.commit(err => {
         if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
@@ -166,28 +188,116 @@ function commitAndReturnUpdatedContact(id, res) {
     });
 }
 
-app.delete('/contact/:id', (req, res) => {
-    const id = req.params.id;
-
-    db.beginTransaction(err => {
-        if (err) return res.status(500).json({ error: err.message });
-
-        db.query('DELETE FROM address WHERE customer_id = ?', [id], (err) => {
-            if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
-
-            db.query('DELETE FROM contact WHERE id = ?', [id], (err) => {
-                if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
-
-                db.commit(err => {
-                    if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
-                    res.json({ message: 'Contact and addresses deleted' });
-                });
-            });
-        });
-    });
-});
-
 const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
+
+// function handleInlineEdit(el) {
+//     const existingInput = el.querySelector('input');
+//     const editBtn = el.querySelector('.edit-contact');
+
+//     if (existingInput) {
+//         const newStreet = el.querySelector('input:nth-of-type(1)').value.trim();
+//         const newCountry = el.querySelector('input:nth-of-type(2)').value.trim();
+//         const id = el.dataset.id;
+
+//         el.textContent = (newStreet || '') + (newCountry ? ', ' + newCountry : '');
+
+//         if (editBtn) {
+//             editBtn.innerHTML = `<img src="images/edit.png" alt="Edit">`;
+//             el.appendChild(editBtn);
+//         }
+
+//        fetch(`http://localhost:3000/contacts/${id}`)
+//             .then(res => res.json())
+//             .then(contact => {
+//                 const updatedContact = {
+//                     ...contact,
+//                     addresses: contact.addresses.map((address, index) => ({
+//                         ...address,
+//                         street: newStreet,
+//                         country: newCountry
+//                     }))
+//                 };
+
+//                 return fetch(`http://localhost:3000/contacts/${id}`, {
+//                     method: 'PUT',
+//                     headers: { 'Content-Type': 'application/json' },
+//                     body: JSON.stringify(updatedContact),
+//                 });
+//             })
+//             .then(res => res.json())
+//             .then(() => loadContacts())
+//             .catch(err => console.error('Error updating address:', err));
+
+//         return;
+//     }
+
+//     const currentText = el.textContent.trim();
+//     const [currentStreet, currentCountry] = currentText.split(',').map(t => t.trim());
+
+//     const input1 = document.createElement('input');
+//     const input2 = document.createElement('input');
+//     input1.type = 'text';
+//     input2.type = 'text';
+//     input1.value = currentStreet || '';
+//     input2.value = currentCountry || '';
+
+//     el.innerHTML = '';
+//     el.appendChild(input1);
+//     el.appendChild(input2);
+
+//     if (editBtn) {
+//         editBtn.innerHTML = `<img src="images/check.png" alt="Save">`;
+//         el.appendChild(editBtn);
+//     }
+
+//     input1.focus();
+
+//     const finalizeEdit = () => {
+//         const newStreet = input1.value.trim();
+//         const newCountry = input2.value.trim();
+//         el.textContent = (newStreet || '') + (newCountry ? ', ' + newCountry : '');
+
+//         if (editBtn) {
+//             editBtn.innerHTML = `<img src="images/edit.png" alt="Edit">`;
+//             el.appendChild(editBtn);
+//         }
+
+//         const id = el.dataset.id;
+//         fetch(`http://localhost:3000/contacts/${id}`)
+//             .then(res => res.json())
+//             .then(contact => {
+//                 const updatedContact = {
+//                     ...contact,
+//                     addresses: contact.addresses.map((address) => ({
+//                         ...address,
+//                         street: newStreet,
+//                         country: newCountry
+//                     }))
+//                 };
+
+//                 return fetch(`http://localhost:3000/contacts/${id}`, {
+//                     method: 'PUT',
+//                     headers: { 'Content-Type': 'application/json' },
+//                     body: JSON.stringify(updatedContact),
+//                 });
+//             })
+//             .then(res => res.json())
+//             .then(() => loadContacts())
+//             .catch(err => console.error('Error updating address:', err));
+//     };
+
+//     const onBlur = () => {
+//         setTimeout(() => {
+//             if (!input1.matches(':focus') && !input2.matches(':focus')) {
+//                 finalizeEdit();
+//             }
+//         }, 100);
+//     };
+
+//     input1.addEventListener('blur', onBlur);
+//     input2.addEventListener('blur', onBlur);
+// }
+

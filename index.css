@@ -1,7 +1,11 @@
-h1, h3, p {
+h1, h2, h3, p {
     padding: 0;
     margin: 0;
     display: inline;
+}
+
+h3{
+    font-size: 20px;
 }
 
 .content {
@@ -15,7 +19,6 @@ h1, h3, p {
 .main {
     display: flex;
     flex-direction: column;
-    gap: 10px;
     justify-content: center;
     align-items: center;
     width: 70%;
@@ -48,11 +51,12 @@ h1, h3, p {
     display: flex;
     gap: 10px;
     justify-content: space-between;
+    align-items: center;
 }
 
 .two-col .left-col, .two-col .right-col {
     width: 50%;
-    height: 27rem;
+    height: 23rem;
     border-radius: 15px;
     border: 1px solid grey;
 }
@@ -61,6 +65,14 @@ h1, h3, p {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.two-col .left-col{
+    overflow: scroll;
+}
+
+.two-col .right-col{
+    height: fit-content;
 }
 
 .two-col, .left-col input:nth-child(1) {
@@ -116,12 +128,21 @@ h1, h3, p {
     width: 95%;
     gap: 15px;
     font-size: 1.3rem;
+    padding: 15px 0;
 }
 
 .two-col .right-col .contact-deets h3 {
     width: 40%;
     line-height: 30px;
     font-size: 2rem;
+    font-weight: 500;
+}
+
+.two-col .right-col .contact-deets .address-1 p,  .two-col .right-col .contact-deets .address-2 p{
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .two-col .right-col .contact-deets > img {
@@ -176,7 +197,7 @@ h1, h3, p {
     .content .main .two-col .left-col, 
     .content .main .two-col .right-col {
         width: 100%;
-        height: 25rem;
+        height: fit-content;
     }
 
     .two-col .right-col .contact-deets > img {
@@ -258,7 +279,6 @@ h1, h3, p {
     gap: 15px;
     padding: 20px;
     width: 100%;
-    height: 90vh;;
     max-width: 500px;
     background-color: white;
     border-radius: 10px;
@@ -269,14 +289,14 @@ h1, h3, p {
 #create-contact-form{
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
     grid-template-areas: 
         "firstName lastName"
         "phone phone"
         "email email"
         "address1 address2"
         "profile profile"
-        "closeButton submitButton";
+        ". buttonDiv";
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -289,6 +309,23 @@ h1, h3, p {
     border: 1px solid rgb(184, 184, 184);
 }
 
+#create-contact-form .buttonDiv{
+    display: flex;
+    grid-area: buttonDiv;
+    gap: 7px;
+}
+
+#create-contact-form .buttonDiv #submit, #create-contact-form .buttonDiv .close-button{
+    display: flex;
+    grid-area: buttonDiv;
+    width: 50%;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.3rem;
+    border-radius: 15px;
+    padding: 10px 20px;
+}
+
 .create-contact #submit{
     width: 90%;
     background-color: rgb(19, 105, 255);
@@ -297,10 +334,10 @@ h1, h3, p {
     color: white;
     padding: 10px;
     grid-area: submitButton;
+    border: 2px solid white;
 }
 
 .create-contact .close-button{
-    grid-area: closeButton;
     border-radius: 20px;
     background-color: white;
     border: 1px solid rgb(0, 98, 255);
@@ -341,4 +378,45 @@ h1, h3, p {
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+
+.contact-deets .address .address-1 input, .contact-deets .address .address-2 input{
+    width: 100%;
+    font-size: 1rem;
+    border-radius: 10px;
+    border: 1px solid rgb(0, 119, 255);
+}
+
+.modal-overlay .confirmation-dialog
+{
+    background-color: white;
+    width: 30%;
+    height: 20%;
+    font-size: 1.3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    gap: 20px;
+}
+.modal-overlay .confirmation-dialog .buttonDiv
+{
+    display: flex;
+    width: 60%;
+    justify-content: space-between;
+    gap: 10px;
+}
+.modal-overlay .confirmation-dialog .buttonDiv button
+{
+    width: 100%;
+    height: 30px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    background-color: rgb(74, 128, 221);
+    border: 1px solid white;
+    color: white;
+    font-weight: 600;
+    border-radius: 12px;
+    cursor: pointer;
 }
