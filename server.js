@@ -80,23 +80,26 @@ app.post('/contacts', (req, res) => {
                 }
 
                 let count = addresses.length;
-                addresses.forEach((addr) => {
-                    db.query(
-                        'INSERT INTO address (customer_id, type, street, state, country) VALUES (?, ?, ?, ?, ?)',
-                        [contactId, addr.type, addr.street, addr.state || '', addr.country],
-                        (err) => {
-                            if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
+                if(count>0)
+                {
+                    addresses.forEach((addr) => {
+                        db.query(
+                            'INSERT INTO address (customer_id, type, street, state, country) VALUES (?, ?, ?, ?, ?)',
+                            [contactId, addr.type, addr.street, addr.state || '', addr.country],
+                            (err) => {
+                                if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
 
-                            count--;
-                            if (count === 0) {
-                                db.commit(err => {
-                                    if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
-                                    res.status(201).json({ message: 'Contact and addresses created', id: contactId });
-                                });
+                                count--;
+                                if (count === 0) {
+                                    db.commit(err => {
+                                        if (err) return db.rollback(() => res.status(500).json({ error: err.message }));
+                                        res.status(201).json({ message: 'Contact and addresses created', id: contactId });
+                                    });
+                                }
                             }
-                        }
-                    );
-                });
+                        );
+                    });
+                }
             }
         );
     });

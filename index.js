@@ -307,7 +307,8 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Please enter a valid phone number (at least 7 digits).');
             return;
         }
-
+        console.log(JSON.stringify(newContact));
+        
         fetch('http://localhost:3000/contacts', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
