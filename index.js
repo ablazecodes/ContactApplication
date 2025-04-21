@@ -150,25 +150,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     
         input1.addEventListener('blur', () => {
-            setTimeout(() => {
-                if (!el.contains(document.activeElement)) {
-                    finalizeEdit();
-                }
-            }, 100);
+            if (!el.contains(document.activeElement)) {
+                finalizeEdit();
+            }
         });
     
         input2.addEventListener('blur', () => {
-            setTimeout(() => {
-                if (!el.contains(document.activeElement)) {
-                    finalizeEdit();
-                }
-            }, 100);
+            if (!el.contains(document.activeElement)) {
+                finalizeEdit();
+            }
         });
-
 
     }
     
-
     searchInput.addEventListener('input', () => {
         const term = searchInput.value.toLowerCase();
         document.querySelectorAll('.contact').forEach(contact => {
@@ -305,15 +299,15 @@ document.addEventListener('DOMContentLoaded', () => {
             addresses: [
                 {
                     type: 'address1',
-                    street: document.getElementById('address1Street').value || 'No address',
+                    street: document.getElementById('address1Street').value || 'No street',
                     state: '',
-                    country: document.getElementById('address1Country').value || 'No address'
+                    country: document.getElementById('address1Country').value || 'No Country'
                 },
                 {
                     type: 'address2',
-                    street: document.getElementById('address2Street').value || 'No address',
+                    street: document.getElementById('address2Street').value || 'No street',
                     state: '',
-                    country: document.getElementById('address2Country').value || 'No address'
+                    country: document.getElementById('address2Country').value || 'No country'
                 }
             ]
         };
