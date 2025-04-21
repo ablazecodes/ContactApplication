@@ -39,7 +39,7 @@ app.get('/contacts', (req, res) => {
     });
 });
 
-app.get('/contacts/:id', (req, res) => {
+app.get('/contacts/id', (req, res) => {
     const id = req.params.id;
     console.log('Requested ID:', req.params.id);
 
@@ -102,7 +102,7 @@ app.post('/contacts', (req, res) => {
     });
 });
 
-app.put('/contact/:id', (req, res) => {
+app.put('/contacts/id', (req, res) => {
     const id = req.params.id;
     const { first_name, last_name, email, phone, profile_img, addresses } = req.body;
 

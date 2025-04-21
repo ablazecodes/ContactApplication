@@ -280,15 +280,15 @@ document.addEventListener('DOMContentLoaded', () => {
             addresses: [
                 {
                     type: 'address1',
-                    street: document.getElementById('address1Street').value,
+                    street: document.getElementById('address1Street').value || 'No address',
                     state: '',
-                    country: document.getElementById('address1Country').value
+                    country: document.getElementById('address1Country').value || 'No address'
                 },
                 {
                     type: 'address2',
-                    street: document.getElementById('address2Street').value,
+                    street: document.getElementById('address2Street').value || 'No address',
                     state: '',
-                    country: document.getElementById('address2Country').value
+                    country: document.getElementById('address2Country').value || 'No address'
                 }
             ]
         };
