@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch(`http://localhost:3000/contact/${contact.id}`, {
+        fetch(`http://localhost:3000/contacts/${contact.id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(updatedContact),
